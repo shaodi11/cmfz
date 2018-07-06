@@ -36,13 +36,20 @@
     </bean>
 
     <!--视图解析器-->
+    <!--
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 
         <property name="prefix" value="/"></property>
         <property name="suffix" value=".jsp"></property>
 
     </bean>
-
+-->
     <!--过滤静态资源-->
     <mvc:default-servlet-handler />
+
+    <!--springmvc文件上传-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="1024000000" />
+    </bean>
+
 </beans>
