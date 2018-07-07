@@ -17,15 +17,9 @@
             ]],
 
             view: detailview,
-/*
-rowData  是当前选中行的对象
-用其点上文件名
-
-
-* */
             detailFormatter: function(rowIndex, rowData){
                 return '<table><tr>' +
-                    '<td rowspan=2 style="border:0"><img src="${pageContext.request.contextPath}/upload/' + rowData.picturePath + '" style="height:50px;"></td>' +
+                    '<td rowspan=2 style="border:0"><img src="${pageContext.request.contextPath}/upload/' + rowData.guruPic + '" style="height:50px;"></td>' +
                     '<td style="border:0">' +
                     '<p>Attribute: ' + rowData.attr1 + '</p>' +
                     '<p>Status: ' + rowData.status + '</p>' +
@@ -47,19 +41,21 @@ rowData  是当前选中行的对象
 	});
  
 	function add(){
-		$("#addPic").dialog({	//点击增加弹出一个注册的窗口
+		$("#addGuru").dialog({	//注册的对话框窗口
 			
 			width:500,
-			height:400,
+			height:300,
 			modal:true,		//定义是否将窗体显示为模式化窗口
 			shadow:true,	//在窗体显示的时候显示阴影
-			href:"/cmfz-admin/addPic.jsp",
+			href:"/cmfz-admin/addGuru.jsp",
 			buttons:[
 			         {
-			        	 iconCls:"icon-save" ,text:"添加",handler:function(){
+			        	 iconCls:"icon-save" ,
+						 text:"添加",
+						 handler:function(){
 			        		 //提交表单到后台进行注册
 			        		 $("#ff").form("submit",{
-			        			 url:"http://localhost:8088/cmfz-admin/registpic.do",
+			        			 url:"${pageContext.request.contextPath}/registGuru.do",
 			        			 onSubmit:function(){
                                      var isValid = $(this).form('validate');
                                      if (!isValid){
@@ -74,11 +70,11 @@ rowData  是当前选中行的对象
                                          $("#tb").datagrid("reload");
                                          $.messager.show({
                                              title:"我的消息",
-                                             msg:"轮播图已添加",
+                                             msg:"上师已添加",
                                              timeout:2000,
                                              showType:"slider",
                                          });
-                                         $("#addPic").dialog("close");
+                                         $("#addGuru").dialog("close");
 									 }
 
 			        			 }
@@ -92,52 +88,25 @@ rowData  是当前选中行的对象
 	 
 	}
 	
-	function remove(){
-		
-		var value = $("#tb").datagrid("getSelected");	//获得
-		console.log(value);
-		$.ajax({
-			type:"POST",
-			url:"http://localhost:8088/cmfz-admin/remove.do",
-			data:"pictureId="+value.pictureId,
-			success:function(message){
-
-				if(message == "ok"){
-
-                    //成功后，刷新页面
-                    $("#tb").datagrid("reload");
-					 $.messager.show({
-							title:"我的消息",
-							msg:"轮播图已删除",
-							timeout:2000,
-							showType:"slider",
-					 });
-				}
-			}
-		});
-
-	}
 
     function update(){
 
         //选中要修改的行
         var value = $("#tb").datagrid("getSelected");
-		alert(value.pictureId);
 
-        $("#updatePic").dialog({
+        $("#updateGuru").dialog({
 
             width:500,
             height:400,
             modal:true,		//定义是否将窗体显示为模式化窗口
             shadow:true,	//在窗体显示的时候显示阴影
-            href:"/cmfz-admin/updatePicForm.jsp",
+            href:"/cmfz-admin/updateGuruForm.jsp",
             onOpen: function(){
 
                 $("#updateff").form("load",{
-                    pictureId:value.pictureId,
-                    pictureName:value.pictureName,
-                    pictureDescription:value.pictureDescription,
-                    pictureStatus:value.pictureStatus
+                    guruId:value.guruId,
+                    guruName:value.guruName,
+                    guruIntroduction:value.guruIntroduction
                 });
 
             },
@@ -149,7 +118,7 @@ rowData  是当前选中行的对象
 
 						//提交表单到后台进行修改
 						$("#updateff").form("submit",{
-							url:"http://localhost:8088/cmfz-admin/modifyPic.do",
+							url:"http://localhost:8088/cmfz-admin/modifyGuru.do",
 							onSubmit:function(){
 								var isValid = $(this).form('validate');
 								if (!isValid){
@@ -165,11 +134,11 @@ rowData  是当前选中行的对象
                                     $("#tb").datagrid("reload");
 									$.messager.show({
 										title:"我的消息",
-										msg:"轮播图已修改",
+										msg:"上师信息已修改",
 										timeout:2000,
 										showType:"slider",
 									});
-									$("#updatePic").dialog("close");
+									$("#updateGuru").dialog("close");
 								}
 
 							}
@@ -184,10 +153,49 @@ rowData  是当前选中行的对象
 
     }
 
- 	function searchAll(value,name){
- 		
-		console.log(value+"-----"+name );
-	} 
+    function selectName(){
+
+		//获取要查询的上师名关键字
+        var name = $("#likeselect").val();
+        $("#tb").datagrid({
+            url:"${pageContext.request.contextPath}/guruPageLikeShow.do?guruName="+name,
+
+            remoteSort:false,
+            singleSelect:true,
+            nowrap:false,
+            fitColumns:true,
+
+            columns:[[
+                {field:"guruId",title:"上师编号",width:50},
+                {field:"guruName",title:"上师法名",width:30},
+                {field:"guruIntroduction",title:"描述信息",width:30},
+            ]],
+
+            view: detailview,
+            detailFormatter: function(rowIndex, rowData){
+                return '<table><tr>' +
+                    '<td rowspan=2 style="border:0"><img src="${pageContext.request.contextPath}/upload/' + rowData.guruPic + '" style="height:50px;"></td>' +
+                    '<td style="border:0">' +
+                    '<p>Attribute: ' + rowData.attr1 + '</p>' +
+                    '<p>Status: ' + rowData.status + '</p>' +
+                    '</td>' +
+                    '</tr></table>';
+            },
+
+            toolbar:"#like",//顶部面板
+            striped:true,	//数据间样式交叉展示
+            pagination : true,	//为true 时 DataGrid控件底部会显示分页工具栏，自动将page和rows传给后台
+            pageList : [ 1, 2, 4, 6, 8, 10 ],
+            pageSize : 4,	//设置初始页面数量
+            fitColumns: true,//根据内容的大小自动设置表格的宽度
+            singleSelect:true,
+
+        });
+
+
+
+    }
+
 </script>
 
 <table id="tb">
@@ -195,13 +203,13 @@ rowData  是当前选中行的对象
  	 
  		<a class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true,text:'新增',onClick:add"></a> 
  		
- 		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true,text:'删除' ,onClick:remove"></a>
-		
-		<a class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true,text:'修改' ,onClick:update" ></a>
+ 		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true,text:'修改' ,onClick:update"></a>
 
-		<input id="likeselect" class="easyui-searchbox" style="width:300px" data-options="searcher:searchAll,prompt:'请您输入法名关键字',menu:'#menus'" name="title" />
-	
- 	</div> 
+		<input id="likeselect" class="easyui-textbox" style="width:150px" data-options="prompt:'请您输入关键字'" name="guruName" />
+
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true,text:'查询' ,onClick:selectName"></a>
+
+	</div>
 </table>
-<div id="addPic"></div>
-<div id="updatePic"></div>
+<div id="addGuru"></div>
+<div id="updateGuru"></div>

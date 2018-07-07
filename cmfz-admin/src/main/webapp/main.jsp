@@ -103,7 +103,7 @@
     </div>   
     <div data-options="region:'center'">
     	<div id="tt" class="easyui-tabs" data-options="fit:true,narrow:true">
-		    <div title="主页" data-options="iconCls:'icon-neighbourhood',"  style="background-image:url(${pageContext.request.contextPath}/image/shouye.jpg);background-repeat: no-repeat;background-size:100% 100%;"></div>
+		    <div title="主页" data-options="iconCls:'icon-neighbourhood',"  style="background-image:url(${pageContext.request.contextPath}/main/image/shouye.jpg);background-repeat: no-repeat;background-size:100% 100%;"></div>
 		</div>  
     </div>   
 </body> 

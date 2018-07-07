@@ -56,7 +56,7 @@ public class PictureController {
         int index = path.lastIndexOf("\\");
 
         //上传文件的路径
-        String pathFile = path.substring(0,index-11);
+        String pathFile = path.substring(0,index-11)+"/upload";
 
         //oldName 是文件上传时的名字
         String oldName = myFile.getOriginalFilename();
@@ -98,25 +98,6 @@ public class PictureController {
         }
         return "no";
     }
-
- /*   *//**
-     * 修改pic之前先查询出来要修改的pic基本信息显示到页面上
-     * @return
-     *//*
-    @RequestMapping("/modifyPicQuery")
-    @ResponseBody
-    public String modifyPicQuery(String pictureId, Model model){
-
-        Picture p = pictureService.queryPictureById(pictureId);
-
-        if (p != null){
-
-            model.addAttribute("modifyPicture",p);
-
-            return "ok";
-        }
-        return "no";
-    }*/
 
 
     /**

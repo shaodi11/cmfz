@@ -59,7 +59,9 @@ rowData  是当前选中行的对象
 			href:"/cmfz-admin/addPic.jsp",
 			buttons:[
 			         {
-			        	 iconCls:"icon-save" ,text:"添加",handler:function(){
+			        	 iconCls:"icon-save" ,
+						 text:"添加",
+						 handler:function(){
 			        		 //提交表单到后台进行注册
 			        		 $("#ff").form("submit",{
 			        			 url:"http://localhost:8088/cmfz-admin/registpic.do",

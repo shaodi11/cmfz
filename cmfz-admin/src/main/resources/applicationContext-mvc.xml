@@ -52,4 +52,9 @@
         <property name="maxUploadSize" value="1024000000" />
     </bean>
 
+
+    <!--easypoi 相关配置-->
+
+
+
 </beans>

@@ -212,6 +212,28 @@
             <version>${slf4j.version}</version>
         </dependency>
         <!-- log end -->
+
+        <!--easypoi satrt-->
+        <dependency>
+            <groupId>org.jeecg</groupId>
+            <artifactId>easypoi-base</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jeecg</groupId>
+            <artifactId>easypoi-web</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jeecg</groupId>
+            <artifactId>easypoi-annotation</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+
+
+        <!--easypoi end-->
     </dependencies>
 
 
