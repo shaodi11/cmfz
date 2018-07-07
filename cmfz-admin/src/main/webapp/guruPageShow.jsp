@@ -150,9 +150,9 @@
 
         });
 
-
     }
 
+    //模糊查询
     function selectName(){
 
 		//获取要查询的上师名关键字
@@ -192,9 +192,64 @@
 
         });
 
+    }
 
+	//文件导出
+    function exportExcel() {
+        window.open("${pageContext.request.contextPath}/exportExcel.do");
+    }
+
+    //文件导入
+    function importExcel() {
+
+        alert("importExcel");
+        $("#addGuru").dialog({	//注册的对话框窗口
+
+            width:500,
+            height:300,
+            modal:true,		//定义是否将窗体显示为模式化窗口
+            shadow:true,	//在窗体显示的时候显示阴影
+            href:"/cmfz-admin/importExcel.jsp",
+            buttons:[
+                {
+                    iconCls:"icon-save" ,
+                    text:"提交",
+                    handler:function(){
+                        //提交表单到后台进行注册
+                        $("#ff").form("submit",{
+                            url:"${pageContext.request.contextPath}/importExcel.do",
+                            onSubmit:function(){
+                                var isValid = $(this).form('validate');
+                                if (!isValid){
+                                    $.messager.progress('close');	// 如果表单是无效的则隐藏进度条
+                                }
+                                return isValid;	// 返回false终止表单提交
+
+                            },
+                            success:function(message){
+                                if(message == "ok"){
+                                    //成功后，刷新页面
+                                    $("#tb").datagrid("reload");
+                                    $.messager.show({
+                                        title:"我的消息",
+                                        msg:"上师已添加",
+                                        timeout:2000,
+                                        showType:"slider",
+                                    });
+                                    $("#addGuru").dialog("close");
+                                }
+
+                            }
+                        });
+
+                    },
+                },
+            ],
+
+        });
 
     }
+
 
 </script>
 
@@ -205,6 +260,10 @@
  		
  		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true,text:'修改' ,onClick:update"></a>
 
+		<a onclick="importExcel()" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true,text:'批量导入'"></a>
+
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true,text:'导出文件' ,onClick:exportExcel"></a>
+
 		<input id="likeselect" class="easyui-textbox" style="width:150px" data-options="prompt:'请您输入关键字'" name="guruName" />
 
 		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true,text:'查询' ,onClick:selectName"></a>
@@ -213,3 +272,5 @@
 </table>
 <div id="addGuru"></div>
 <div id="updateGuru"></div>
+<div id="upload"></div>
+<div id="download"></div>

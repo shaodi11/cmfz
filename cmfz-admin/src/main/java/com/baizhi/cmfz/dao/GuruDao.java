@@ -2,6 +2,7 @@ package com.baizhi.cmfz.dao;
 
 import com.baizhi.cmfz.entity.Guru;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  *
  * 上师的增删改查操作的dao
  */
+@Repository
 public interface GuruDao {
     /**
      * @Description 添加上师

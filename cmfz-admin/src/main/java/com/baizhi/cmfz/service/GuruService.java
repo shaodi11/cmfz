@@ -2,6 +2,8 @@ package com.baizhi.cmfz.service;
 
 import com.baizhi.cmfz.entity.Guru;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -63,5 +65,5 @@ public interface GuruService {
      */
     public Map<String,Object> queryLikeGuru(String name , Integer index , Integer pageSize);
 
-
+    boolean batchAddGuru(List<Guru> gurus);
 }

@@ -47,6 +47,7 @@ public class GuruServiceImpl implements GuruService {
     }
 
     @Override
+    @Transactional
     public Guru queryGuruById(String guruId) {
 
         Guru guru = new Guru();
@@ -60,7 +61,7 @@ public class GuruServiceImpl implements GuruService {
     }
 
     @Override
-    @ResponseBody
+    @Transactional
     public Map<String, Object> queryGuruPage(Integer index, Integer pageSize) {
 
         Map<String, Object> map = new HashMap<String, Object>();
@@ -76,7 +77,7 @@ public class GuruServiceImpl implements GuruService {
     }
 
     @Override
-    @ResponseBody
+    @Transactional
     public Map<String,Object> queryLikeGuru(String name, Integer index, Integer pageSize) {
 
         Map<String, Object> map = new HashMap<>();
@@ -91,5 +92,16 @@ public class GuruServiceImpl implements GuruService {
         map.put("rows",gurus);
 
         return map;
+    }
+
+    @Override
+    @Transactional
+    public boolean batchAddGuru(List<Guru> gurus) {
+        int count=0;
+        for (Guru g:gurus){
+            guruDao.insertGuru(g);
+            count++;
+        }
+        return gurus.size()==count;
     }
 }

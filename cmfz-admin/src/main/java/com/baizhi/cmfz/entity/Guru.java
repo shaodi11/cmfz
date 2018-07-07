@@ -1,5 +1,6 @@
 package com.baizhi.cmfz.entity;
 
+import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
@@ -11,9 +12,16 @@ import java.util.Date;
  */
 @Component
 public class Guru implements Serializable {
+    //上传文件时，为了使其辨认实体类属性
+    @Excel(name="上师编号")
     private String guruId ;
+
+    @Excel(name="上师法名")
     private String guruName ;
+
     private String guruPic ;
+
+    @Excel(name="上师简介")
     private String guruIntroduction ;
 
     public Guru() {
