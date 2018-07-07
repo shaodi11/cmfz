@@ -2,7 +2,6 @@ package com.baizhi.cmfz.service;
 
 import com.baizhi.cmfz.entity.Guru;
 import org.springframework.stereotype.Service;
-
 import java.util.Map;
 
 /**
@@ -55,6 +54,14 @@ public interface GuruService {
      */
     public Map<String,Object> queryGuruPage(Integer index, Integer pageSize);
 
+    /**
+     * @Description 通过名字的关键字，模糊查询出上师
+     * @Author      邵迪
+     * @Time        2018-07-06
+     * @Param       参数为前台传来的需要查询的姓名关键字,及分页显示时的页数，和每页显示的个数
+     *
+     */
+    public Map<String,Object> queryLikeGuru(String name , Integer index , Integer pageSize);
 
 
 }

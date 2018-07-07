@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "../mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.cmfz.dao.MenuDao">
+
+    <resultMap id="rs" type="Menu">
+
+        <id property="menuId" column="p_menuId"></id>
+        <result property="menuName" column="p_menuName"></result>
+        <result property="menuCode" column="p_menuCode"></result>
+        <result property="menuIcon" column="p_menuIcon"></result>
+        <result property="menuLevel" column="p_menuLevel"></result>
+
+        <collection property="menuList" ofType="Menu">
+            <id property="menuId" column="c_menuId"></id>
+            <result property="menuName" column="c_menuName"></result>
+            <result property="menuCode" column="c_menuCode"></result>
+            <result property="menuIcon" column="c_menuIcon"></result>
+            <result property="menuLevel" column="c_menuLevel"></result>
+            <result property="menuURL" column="c_menuURL"></result>
+        </collection>
+
+    </resultMap>
+
+
+    <select id="selectMenu" resultMap="rs">
+        SELECT
+            p.menuId AS p_menuId,
+            p.menuName AS p_menuName,
+            p.menuCode AS p_menuCode,
+            p.menuIcon AS p_menuIcon,
+            p.menuLevel AS p_menuLevel,
+            c.menuId AS c_menuId,
+            c.menuName AS c_menuName,
+            c.menuCode AS c_menuCode,
+            c.menuIcon AS c_menuIcon,
+            c.menuLevel AS c_menuLevel,
+            c.menuURL AS c_menuURL
+        FROM
+             t_menu p
+        LEFT JOIN t_menu c ON p.menuId = c.menuParentId
+        WHERE
+            p.menuLevel = 1
+    </select>
+
+
+</mapper>

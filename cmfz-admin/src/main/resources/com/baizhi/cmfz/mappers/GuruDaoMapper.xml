@@ -30,4 +30,12 @@
         select count(*) from t_guru
     </select>
 
+    <select id="selectLikeGuru" resultType="Guru">
+        select * from t_guru where guruName like #{name} limit #{index},#{pageSize}
+    </select>
+
+    <select id="likeGuruCount" resultType="Integer">
+        select count(*) from t_guru where guruName like #{name}
+    </select>
+
 </mapper>
