@@ -1,7 +1,5 @@
-import com.baizhi.cmfz.dao.MenuDao;
 import com.baizhi.cmfz.entity.Menu;
 import com.baizhi.cmfz.service.MenuService;
-import com.baizhi.cmfz.service.MenuServiceImpl;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

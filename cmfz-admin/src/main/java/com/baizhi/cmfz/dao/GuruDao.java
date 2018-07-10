@@ -81,4 +81,15 @@ public interface GuruDao {
      * @Param       参数为前台传来的需要查询的姓名关键字,及分页显示时的页数，和每页显示的个数
      */
     public Integer likeGuruCount(@Param("name") String name);
+
+
+    /**
+     * @Description 查询所有上师信息
+     * @Author      邵迪
+     * @Time        2018-07-06
+     * @Param       为
+     */
+    public List<Guru> selectGuruAll();
+
+
 }

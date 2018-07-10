@@ -2,7 +2,7 @@
 <script type="text/javascript">
 	$(function() {
 	 
-	 	$("#tb").datagrid({
+	 	$("#gurutb").datagrid({
             url:"${pageContext.request.contextPath}/guruPageShow.do",
 
             remoteSort:false,
@@ -19,15 +19,15 @@
             view: detailview,
             detailFormatter: function(rowIndex, rowData){
                 return '<table><tr>' +
-                    '<td rowspan=2 style="border:0"><img src="${pageContext.request.contextPath}/upload/' + rowData.guruPic + '" style="height:50px;"></td>' +
+                    '<td rowspan=2 style="border:0"><img src="${pageContext.request.contextPath}/guruPic/' + rowData.guruPic + '" style="height:50px;"></td>' +
                     '<td style="border:0">' +
-                    '<p>Attribute: ' + rowData.attr1 + '</p>' +
-                    '<p>Status: ' + rowData.status + '</p>' +
+                    '<p>上师法名: ' + rowData.guruName + '</p>' +
+                    '<p>上师简介: ' + rowData.guruIntroduction + '</p>' +
                     '</td>' +
                     '</tr></table>';
             },
 
-            toolbar:"#like",//顶部面板
+            toolbar:"#gurulike",//顶部面板
 	 		striped:true,	//数据间样式交叉展示
 	 		pagination : true,	//为true 时 DataGrid控件底部会显示分页工具栏，自动将page和rows传给后台
 			pageList : [ 1, 2, 4, 6, 8, 10 ],
@@ -54,7 +54,7 @@
 						 text:"添加",
 						 handler:function(){
 			        		 //提交表单到后台进行注册
-			        		 $("#ff").form("submit",{
+			        		 $("#guruaddff").form("submit",{
 			        			 url:"${pageContext.request.contextPath}/registGuru.do",
 			        			 onSubmit:function(){
                                      var isValid = $(this).form('validate');
@@ -67,7 +67,7 @@
 			        			 success:function(message){
 			        			     if(message == "ok"){
                                          //成功后，刷新页面
-                                         $("#tb").datagrid("reload");
+                                         $("#gurutb").datagrid("reload");
                                          $.messager.show({
                                              title:"我的消息",
                                              msg:"上师已添加",
@@ -92,7 +92,7 @@
     function update(){
 
         //选中要修改的行
-        var value = $("#tb").datagrid("getSelected");
+        var value = $("#gurutb").datagrid("getSelected");
 
         $("#updateGuru").dialog({
 
@@ -103,7 +103,7 @@
             href:"/cmfz-admin/updateGuruForm.jsp",
             onOpen: function(){
 
-                $("#updateff").form("load",{
+                $("#updateguruff").form("load",{
                     guruId:value.guruId,
                     guruName:value.guruName,
                     guruIntroduction:value.guruIntroduction
@@ -117,7 +117,7 @@
 					handler:function(){
 
 						//提交表单到后台进行修改
-						$("#updateff").form("submit",{
+						$("#updateguruff").form("submit",{
 							url:"http://localhost:8088/cmfz-admin/modifyGuru.do",
 							onSubmit:function(){
 								var isValid = $(this).form('validate');
@@ -131,7 +131,7 @@
 
 								if (message == "ok"){
 								    //修改成功后，刷新页面
-                                    $("#tb").datagrid("reload");
+                                    $("#gurutb").datagrid("reload");
 									$.messager.show({
 										title:"我的消息",
 										msg:"上师信息已修改",
@@ -157,7 +157,7 @@
 
 		//获取要查询的上师名关键字
         var name = $("#likeselect").val();
-        $("#tb").datagrid({
+        $("#gurutb").datagrid({
             url:"${pageContext.request.contextPath}/guruPageLikeShow.do?guruName="+name,
 
             remoteSort:false,
@@ -172,17 +172,18 @@
             ]],
 
             view: detailview,
+            //rowData 为当前所指的实体
             detailFormatter: function(rowIndex, rowData){
                 return '<table><tr>' +
-                    '<td rowspan=2 style="border:0"><img src="${pageContext.request.contextPath}/upload/' + rowData.guruPic + '" style="height:50px;"></td>' +
+                    '<td rowspan=2 style="border:0"><img src="${pageContext.request.contextPath}/guruPic/' + rowData.guruPic + '" style="height:50px;"></td>' +
                     '<td style="border:0">' +
-                    '<p>Attribute: ' + rowData.attr1 + '</p>' +
-                    '<p>Status: ' + rowData.status + '</p>' +
+                    '<p>上师法名: ' + rowData.guruName + '</p>' +
+                    '<p>上师简介: ' + rowData.guruIntroduction + '</p>' +
                     '</td>' +
                     '</tr></table>';
             },
 
-            toolbar:"#like",//顶部面板
+            toolbar:"#gurulike",//顶部面板
             striped:true,	//数据间样式交叉展示
             pagination : true,	//为true 时 DataGrid控件底部会显示分页工具栏，自动将page和rows传给后台
             pageList : [ 1, 2, 4, 6, 8, 10 ],
@@ -196,14 +197,17 @@
 
 	//文件导出
     function exportExcel() {
-        window.open("${pageContext.request.contextPath}/exportExcel.do");
+        //会打开一个新的页面，操作后跳回原页面
+        //window.open("${pageContext.request.contextPath}/exportExcel.do");
+
+		//会去执行所给路径的代码，给他什么执行什么，当前页面不会改动
+        location.href="${pageContext.request.contextPath}/exportExcel.do";
     }
 
     //文件导入
     function importExcel() {
 
-        alert("importExcel");
-        $("#addGuru").dialog({	//注册的对话框窗口
+        $("#upload").dialog({	//文件导出的对话框窗口
 
             width:500,
             height:300,
@@ -216,7 +220,7 @@
                     text:"提交",
                     handler:function(){
                         //提交表单到后台进行注册
-                        $("#ff").form("submit",{
+                        $("#importexcelff").form("submit",{
                             url:"${pageContext.request.contextPath}/importExcel.do",
                             onSubmit:function(){
                                 var isValid = $(this).form('validate');
@@ -229,7 +233,7 @@
                             success:function(message){
                                 if(message == "ok"){
                                     //成功后，刷新页面
-                                    $("#tb").datagrid("reload");
+                                    $("#gurutb").datagrid("reload");
                                     $.messager.show({
                                         title:"我的消息",
                                         msg:"上师已添加",
@@ -253,20 +257,20 @@
 
 </script>
 
-<table id="tb">
-	<div id="like">
+<table id="gurutb">
+	<div id="gurulike">
  	 
  		<a class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true,text:'新增',onClick:add"></a> 
  		
- 		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true,text:'修改' ,onClick:update"></a>
+ 		<a class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true,text:'修改' ,onClick:update"></a>
 
-		<a onclick="importExcel()" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true,text:'批量导入'"></a>
+		<a onclick="importExcel()" class="easyui-linkbutton" data-options="iconCls:'icon-20130406125519344_easyicon_net_16',plain:true,text:'批量导入'"></a>
 
-		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true,text:'导出文件' ,onClick:exportExcel"></a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-20130406125647919_easyicon_net_16',plain:true,text:'导出文件' ,onClick:exportExcel"></a>
 
 		<input id="likeselect" class="easyui-textbox" style="width:150px" data-options="prompt:'请您输入关键字'" name="guruName" />
 
-		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true,text:'查询' ,onClick:selectName"></a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-zoom',plain:true,text:'查询' ,onClick:selectName"></a>
 
 	</div>
 </table>

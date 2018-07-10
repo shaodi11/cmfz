@@ -5,7 +5,7 @@
 	});
 
 </script>
-<form id="updateff" method="post" enctype="multipart/form-data">
+<form id="updateguruff" method="post" enctype="multipart/form-data">
 	<div style="margin-left: 100px;margin-top: 20px">
 
 		ID：<input class="easyui-textbox" data-options="width:150," style="margin:20px;readonly:true;" name="guruId"/><br><br>

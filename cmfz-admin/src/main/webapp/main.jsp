@@ -8,18 +8,18 @@
 <title>持名法州主页</title>
 <script type="text/javascript" src="/cmfz-admin/js/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/cmfz-admin/themes/IconExtension.css">
-
-
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.easyui.min.js"></script>
-
 <script type="text/javascript" src="/cmfz-admin/js/easyui-lang-zh_CN.js"></script>
-
 <link rel="stylesheet" type="text/css" href="/cmfz-admin/themes/default/easyui.css">
 <script type="text/javascript" src="/cmfz-admin/script/datagrid-detailview.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/echarts.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/china.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/vintage.js"></script>
+
 <script type="text/javascript">
 
 	//二级菜单点击后，在面板上添加选项卡
-	function addPanel(menuName,menuURL) {
+	function addPanel(menuName,menuURL,menuIcon) {
 
 	    var status = $("#tt").tabs("exists",menuName);
 
@@ -31,6 +31,7 @@
 
             $("#tt").tabs("add",{
                 title:menuName,
+                iconCls:menuIcon,
 				href:"${pageContext.request.contextPath}/"+menuURL,
                 closable:true,
             });
@@ -57,7 +58,7 @@
 				     //嵌套遍历，将一级菜单里的子集菜单放在con里，添加到分类的子项
 				     var con = "" ;
 				     $.each(obj.menuList,function (index , child) {
-						 con += "<p style='text-align: center'><a type=\"easyui-linkbutton\" data-options=\"iconCls:'"+child.menuIcon+"'\" onclick=\" addPanel('"+child.menuName+"','"+child.menuURL+"') \">"+child.menuName+"</a></p>" ;
+						 con += "<p style='text-align: center'><a type=\"easyui-linkbutton\" data-options=\"iconCls:'"+child.menuIcon+"'\" onclick=\" addPanel('"+child.menuName+"','"+child.menuURL+"','"+child.menuIcon+"') \">"+child.menuName+"</a></p>" ;
                      })
 
 				     $("#aa").accordion("add",{

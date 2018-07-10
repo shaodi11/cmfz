@@ -21,17 +21,11 @@ public class GuruTest {
 
         ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
 
-       // GuruService grurService = (GuruService) ctx.getBean("guruServiceImpl");
+        GuruService grurService = (GuruService) ctx.getBean("guruServiceImpl");
 
-        //Guru g = new Guru("93ebee16ffdc4f2690a62a8d44506beb", "仁波切11", "2.png", "上师1枚");
+        Guru g = new Guru(UUIDGenerator.getUUID(), "仁波切11", "2.png", "上师1枚");
 
-        //System.out.println(grurService.modifyGuru(g));
-
-        GuruDao guruDao = (GuruDao) ctx.getBean("guruDao");
-
-       // System.out.println(guruDao.selectGuruPage(0,30));
-
-        System.out.println(guruDao.selectLikeGuru("%仁波%",0,2));
+        int i = grurService.addGuru(g);
 
     }
 }

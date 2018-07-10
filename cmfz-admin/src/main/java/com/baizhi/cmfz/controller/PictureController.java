@@ -3,6 +3,7 @@ package com.baizhi.cmfz.controller;
 import com.baizhi.cmfz.entity.Picture;
 import com.baizhi.cmfz.service.PictureService;
 import com.baizhi.cmfz.util.UUIDGenerator;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,31 +52,25 @@ public class PictureController {
     public String registPic(MultipartFile myFile , HttpServletRequest request ,String pictureDescription) throws Exception{
 
         //获得当前所在目录的绝对路径
-        String path = request.getSession().getServletContext().getRealPath("\\");
-
-        int index = path.lastIndexOf("\\");
+        String realPath = request.getRealPath("");
 
         //上传文件的路径
-        String pathFile = path.substring(0,index-11)+"/upload";
+        String uploadPath = realPath.substring(0,realPath.lastIndexOf("\\"))+"\\upload";
 
         //oldName 是文件上传时的名字
         String oldName = myFile.getOriginalFilename();
-        System.out.println("文件上传时的名字:"+oldName);
-
 
         //文件名唯一性 优化
-        String uuid = UUIDGenerator.getUUID();
+        String uuid = UUIDGenerator.getUUID();  //图片的别名，并且充当图片的id
 
-        //文件存储的真实路径,将id号和传来的文件名组合成上传到文件目录的新名字，同时也将其当做路径名用于后面取出图片做展示
-        String realPath = uuid+oldName;
-        System.out.println("当前目录之前的路径(文件存储的真实路径):"+realPath);
-
+        //文件存储的真实路径,将id号和传来的文件名组合成上传到文件目录的新名字，以防图片名相同会被覆盖掉，同时也将其当做路径名用于后面取出图片做展示
+        String fileName = uuid +"."+ oldName;
 
         //文件写入到指定文件内
-        myFile.transferTo(new File(pathFile+"/"+uuid+oldName));
+        myFile.transferTo(new File(uploadPath+"\\"+fileName));
 
         //将上传来的轮播图信息放至数据库
-        Picture picture = new Picture(uuid, oldName, realPath, new Date(), pictureDescription, "未展示");
+        Picture picture = new Picture(uuid, oldName, fileName, new Date(), pictureDescription, "未展示");
         int result = pictureService.addPicture(picture);
         if (result>0){
             return "ok";

@@ -2,7 +2,7 @@
 <script type="text/javascript">
 	$(function() {
 	 
-	 	$("#tb").datagrid({
+	 	$("#pictb").datagrid({
             url:"${pageContext.request.contextPath}/pageshow.do",
 
             remoteSort:false,
@@ -15,7 +15,19 @@
                 {field:"pictureName",title:"文件名",width:30},
                 {field:"pictureDescription",title:"描述信息",width:30},
                 {field:"pictureStatus",title:"轮播图状态",width:30},
-                {field:"pictureDate",title:"轮播图创建时间",width:30},
+                {
+                    field:"pictureDate",title:"轮播图创建时间",width:30,
+                    formatter:function (value) {
+                        var date = new Date(value);
+                        var year = date.getFullYear();
+                        var month = date.getMonth();
+                        var day = date.getDay();
+                        var hour = date.getHours();
+                        var minus = date.getMinutes();
+                        var second = date.getSeconds();
+                        return year+"年"+month+"月"+day+"日"+hour+"时"+minus+"分"+second+"秒";
+                    }
+				},
 
             ]],
 
@@ -24,14 +36,13 @@
 rowData  是当前选中行的对象
 用其点上文件名
 
-
 * */
             detailFormatter: function(rowIndex, rowData){
                 return '<table><tr>' +
                     '<td rowspan=2 style="border:0"><img src="${pageContext.request.contextPath}/upload/' + rowData.picturePath + '" style="height:50px;"></td>' +
                     '<td style="border:0">' +
-                    '<p>Attribute: ' + rowData.attr1 + '</p>' +
-                    '<p>Status: ' + rowData.status + '</p>' +
+                    '<p>轮播图描述: ' + rowData.pictureDescription + '</p>' +
+                    '<p>轮播图状态: ' + rowData.pictureStatus + '</p>' +
                     '</td>' +
                     '</tr></table>';
             },
@@ -63,7 +74,7 @@ rowData  是当前选中行的对象
 						 text:"添加",
 						 handler:function(){
 			        		 //提交表单到后台进行注册
-			        		 $("#ff").form("submit",{
+			        		 $("#addpic").form("submit",{
 			        			 url:"http://localhost:8088/cmfz-admin/registpic.do",
 			        			 onSubmit:function(){
                                      var isValid = $(this).form('validate');
@@ -76,7 +87,7 @@ rowData  是当前选中行的对象
 			        			 success:function(message){
 			        			     if(message == "ok"){
                                          //成功后，刷新页面
-                                         $("#tb").datagrid("reload");
+                                         $("#pictb").datagrid("reload");
                                          $.messager.show({
                                              title:"我的消息",
                                              msg:"轮播图已添加",
@@ -99,7 +110,7 @@ rowData  是当前选中行的对象
 	
 	function remove(){
 		
-		var value = $("#tb").datagrid("getSelected");	//获得
+		var value = $("#pictb").datagrid("getSelected");	//获得
 		console.log(value);
 		$.ajax({
 			type:"POST",
@@ -110,7 +121,7 @@ rowData  是当前选中行的对象
 				if(message == "ok"){
 
                     //成功后，刷新页面
-                    $("#tb").datagrid("reload");
+                    $("#pictb").datagrid("reload");
 					 $.messager.show({
 							title:"我的消息",
 							msg:"轮播图已删除",
@@ -126,7 +137,7 @@ rowData  是当前选中行的对象
     function update(){
 
         //选中要修改的行
-        var value = $("#tb").datagrid("getSelected");
+        var value = $("#pictb").datagrid("getSelected");
 		alert(value.pictureId);
 
         $("#updatePic").dialog({
@@ -167,7 +178,7 @@ rowData  是当前选中行的对象
 
 								if (message == "ok"){
 								    //修改成功后，刷新页面
-                                    $("#tb").datagrid("reload");
+                                    $("#pictb").datagrid("reload");
 									$.messager.show({
 										title:"我的消息",
 										msg:"轮播图已修改",
@@ -195,7 +206,7 @@ rowData  是当前选中行的对象
 	} 
 </script>
 
-<table id="tb">
+<table id="pictb">
 	<div id="like">
  	 
  		<a class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true,text:'新增',onClick:add"></a> 
@@ -203,9 +214,7 @@ rowData  是当前选中行的对象
  		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true,text:'删除' ,onClick:remove"></a>
 		
 		<a class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true,text:'修改' ,onClick:update" ></a>
-		
 
-	
  	</div> 
 </table>
 <div id="addPic"></div>

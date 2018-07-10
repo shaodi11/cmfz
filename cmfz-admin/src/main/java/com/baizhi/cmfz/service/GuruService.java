@@ -65,5 +65,13 @@ public interface GuruService {
      */
     public Map<String,Object> queryLikeGuru(String name , Integer index , Integer pageSize);
 
-    boolean batchAddGuru(List<Guru> gurus);
+    public boolean batchAddGuru(List<Guru> gurus);
+
+    /**
+     * @Description 分页展示上师信息
+     * @Author      邵迪
+     * @Time        2018-07-06
+     * @return      用于将查询结果放至添加文章页面的上师选择处
+     */
+    public List<Guru> queryGuruAll();
 }

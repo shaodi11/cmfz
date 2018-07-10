@@ -1,8 +1,9 @@
-package com.baizhi.cmfz.service;
+package com.baizhi.cmfz.service.impl;
 
 
 import com.baizhi.cmfz.dao.ManagerDao;
 import com.baizhi.cmfz.entity.Manager;
+import com.baizhi.cmfz.service.ManagerService;
 import com.baizhi.cmfz.util.MD5;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

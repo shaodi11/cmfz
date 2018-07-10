@@ -7,7 +7,7 @@
 	});
 
 </script>
-<form id="ff" method="post" enctype="multipart/form-data">
+<form id="guruaddff" method="post" enctype="multipart/form-data">
 	<div style="margin-left: 100px;margin-top: 20px">
 
 		上师法名： <input class="easyui-textbox" data-options="width:170,"  name="guruName"/><br><br>

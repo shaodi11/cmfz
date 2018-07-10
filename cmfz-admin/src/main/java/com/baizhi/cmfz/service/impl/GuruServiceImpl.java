@@ -1,12 +1,11 @@
-package com.baizhi.cmfz.service;
+package com.baizhi.cmfz.service.impl;
 
 import com.baizhi.cmfz.dao.GuruDao;
 import com.baizhi.cmfz.entity.Guru;
+import com.baizhi.cmfz.service.GuruService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -94,14 +93,33 @@ public class GuruServiceImpl implements GuruService {
         return map;
     }
 
+    /**
+     * 文件批量导入，调用insertGuru方法，多次插入数据
+     * @param gurus
+     * @return
+     */
     @Override
     @Transactional
     public boolean batchAddGuru(List<Guru> gurus) {
+        //count用于记录插入的总条数
         int count=0;
         for (Guru g:gurus){
             guruDao.insertGuru(g);
             count++;
         }
+        //当总条数和传来的gurus的长度相同时，返回true，反之返回false
         return gurus.size()==count;
+    }
+
+
+    /**
+     * @Description 分页展示上师信息
+     * @Author      邵迪
+     * @return      用于将查询结果放至添加文章页面的上师选择处
+     */
+    @Override
+    @Transactional
+    public List<Guru> queryGuruAll(){
+        return guruDao.selectGuruAll();
     }
 }

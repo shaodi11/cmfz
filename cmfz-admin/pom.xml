@@ -49,6 +49,7 @@
             <artifactId>easypoi-web</artifactId>
             <version>RELEASE</version>
         </dependency>
+
     </dependencies>
 
     <build>

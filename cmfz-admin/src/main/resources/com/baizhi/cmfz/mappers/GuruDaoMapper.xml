@@ -38,4 +38,8 @@
         select count(*) from t_guru where guruName like #{name}
     </select>
 
+    <select id="selectGuruAll" resultType="Guru">
+        select * from t_guru
+    </select>
+
 </mapper>

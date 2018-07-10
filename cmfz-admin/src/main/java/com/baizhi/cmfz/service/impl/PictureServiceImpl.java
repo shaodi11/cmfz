@@ -1,7 +1,8 @@
-package com.baizhi.cmfz.service;
+package com.baizhi.cmfz.service.impl;
 
 import com.baizhi.cmfz.dao.PictureDao;
 import com.baizhi.cmfz.entity.Picture;
+import com.baizhi.cmfz.service.PictureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +15,7 @@ import java.util.Map;
  */
 @Service
 @Transactional
-public class PictureServiceImpl implements PictureService{
+public class PictureServiceImpl implements PictureService {
 
     @Autowired
     private PictureDao pictureDao;
