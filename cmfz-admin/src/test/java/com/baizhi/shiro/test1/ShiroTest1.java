@@ -1,8 +1,12 @@
+/*
+
 package com.baizhi.shiro.test1;
 
+*/
 /**
  * Created by 邵迪 on 2018/7/10.
- */
+ *//*
+
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -12,12 +16,15 @@ import org.apache.shiro.config.IniSecurityManagerFactory;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.subject.Subject;
 
+*/
 /**
  * shiro 基本练习
- */
+ *//*
+
 public class ShiroTest1 {
 
-   /* public static void main(String[] args) {
+   */
+/* public static void main(String[] args) {
         //shiro认证  基础认证步骤
 
         //1.初始化基于ini配置文件的安全管理器工厂
@@ -45,7 +52,8 @@ public class ShiroTest1 {
 
         subject.logout();
     }
-*/
+*//*
+
 
 
     public static void main(String[] args) {
@@ -78,3 +86,4 @@ public class ShiroTest1 {
         subject.logout();
     }
 }
+*/

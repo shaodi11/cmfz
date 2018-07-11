@@ -31,7 +31,7 @@ public class ArticleController {
     private ArticleService articleService;
 
     /**
-     * 添加轮播图
+     * 添加文章
      * @throws Exception
      */
     @RequestMapping("/registArticle")

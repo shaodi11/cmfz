@@ -3,6 +3,10 @@ package com.baizhi.cmfz.controller;
 import com.baizhi.cmfz.code.VerificationCodeType;
 import com.baizhi.cmfz.entity.Manager;
 import com.baizhi.cmfz.service.ManagerService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
@@ -31,11 +35,11 @@ public class ManagerController {
      * @Time        2018-07-04
      * @param manager   接收到的管理员信息
      * @param code      接收到的验证码
-     * @param remember  接收到的复选框记住密码的状态
+     * @param rememberMe  接收到的复选框记住密码的状态
      * @return
      */
     @RequestMapping("/login")
-    public String loginManager(Manager manager, String code, String remember, HttpServletRequest request ,HttpServletResponse response){
+    public String loginManager(Manager manager, String code, boolean rememberMe, HttpServletRequest request ,HttpServletResponse response){
         HttpSession session = request.getSession();
         //从session中取出验证码的值，用以和前台传来的code做对比
         String realCode = (String) session.getAttribute("rcode");
@@ -45,14 +49,14 @@ public class ManagerController {
 
         //输入的code与session中取得的code作对比，值一致时，进行登录验证
         if (code!=null && realCode.equalsIgnoreCase(code)){
-
+/*
             Manager realManager = managerService.queryManagerByName(manager);
             if (realManager != null){
 
                 //登录验证成功，将登录的管理员账号存入到session中，以便后续用到
                 session.setAttribute("manager",realManager);
 
-/*cookie 记住姓名实现， URLEncoder.encode乱码不能实现*/
+*//*cookie 记住姓名实现， URLEncoder.encode乱码不能实现*//*
                 if(remember != null ){  //记住用户
 
                     String userName =  realManager.getManagerName();
@@ -85,10 +89,30 @@ public class ManagerController {
                 }
 
                 return "forward:/main.jsp";
+            }*/
+
+
+
+            System.out.println("-----------------"+rememberMe+"----------------------");
+
+            //在web环境中，安全管理器及其工厂的创建初始化，会在配置文件中被自动执行，
+            //在代码的编程中，只需从securityUtil中获取主体对象,将主体对象放至令牌中，发送给自定义数据源，认证登录
+            Subject subject = SecurityUtils.getSubject();
+
+            try {
+                UsernamePasswordToken token = new UsernamePasswordToken(manager.getManagerName(), manager.getManagerPassword(), rememberMe);
+                subject.login(token);
+                System.out.println("------认证成功-----");
+                return "redirect:/main.jsp";
+            } catch (AuthenticationException e) {
+                System.out.println("------认证失败-----");
+                e.printStackTrace();
             }
+
+
         }
 
-        return "/index.jsp";
+        return "redirect:/login.jsp";
     }
     /**
      * @Description 登录时验证码的产生

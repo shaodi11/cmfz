@@ -75,7 +75,7 @@
 						</th>
 						<td>
 							<label>
-								<input type="checkbox" id="isRememberUsername"  name="remember" checked="checked"  /> 记住用户名
+								<input type="checkbox" id="isRememberUsername"  name="rememberMe" checked="checked"  /> 记住用户名
 							</label>
 						</td>
 					</tr>

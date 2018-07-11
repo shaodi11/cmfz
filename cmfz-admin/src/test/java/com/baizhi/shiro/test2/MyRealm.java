@@ -15,6 +15,7 @@ import java.util.UUID;
  */
 
 
+/*
 
 public class MyRealm extends AuthenticatingRealm{
     @Override
@@ -42,3 +43,4 @@ public class MyRealm extends AuthenticatingRealm{
         return null;
     }
 }
+*/

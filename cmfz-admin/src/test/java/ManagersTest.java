@@ -12,7 +12,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 /**
  * Created by 邵迪 on 2018/7/4.
  */
-public class ManagerTest {
+public class ManagersTest {
     @Test
     public void testManager(){
 
@@ -62,14 +62,16 @@ public class ManagerTest {
     public void testServiceSelectManager(){
         Manager manager = new Manager();
 
-        manager.setManagerName("小小");
+        manager.setManagerName("tom");
 
         manager.setManagerPassword("111111");
 
         ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
 
+        ManagerDao managerDao = (ManagerDao) ctx.getBean("managerDao");
         ManagerService Impl = (ManagerService) ctx.getBean("managerServiceImpl");
 
+      //  System.out.println(managerDao.selectManagerByName(manager));
         System.out.println(Impl.queryManagerByName(manager));
     }
 

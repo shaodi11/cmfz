@@ -19,7 +19,7 @@ public class LogController {
     private LogService logService;
 
     /**
-     * 添加轮播图
+     * 日志展示
      * @throws Exception
      */
     @RequestMapping("/logPageShow")

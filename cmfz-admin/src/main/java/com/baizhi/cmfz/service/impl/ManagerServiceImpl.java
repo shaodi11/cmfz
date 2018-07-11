@@ -30,7 +30,7 @@ public class ManagerServiceImpl implements ManagerService {
      * @return 空 或 一个已存在的管理员
      */
     @Override
-    @Transactional()
+    @Transactional
     public Manager queryManagerByName(Manager manager) {
         Manager man = null;
 

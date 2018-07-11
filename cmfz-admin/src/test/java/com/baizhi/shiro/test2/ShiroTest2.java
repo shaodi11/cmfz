@@ -1,8 +1,11 @@
+/*
 package com.baizhi.shiro.test2;
 
+*/
 /**
  * Created by 邵迪 on 2018/7/10.
- */
+ *//*
+
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -12,9 +15,11 @@ import org.apache.shiro.config.IniSecurityManagerFactory;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.subject.Subject;
 
+*/
 /**
  * shiro 基本练习
- */
+ *//*
+
 public class ShiroTest2 {
 
     public static void main(String[] args) {
@@ -47,4 +52,4 @@ public class ShiroTest2 {
         //登出方法
         subject.logout();
     }
-}
+}*/

@@ -61,4 +61,75 @@
 
     <!--使用Aspectj 风格的aop，对用户执行操作时，日志的监控-->
     <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+
+
+
+    <!-- ======  shiro 的相关配置====================================================== -->
+    <!--shiro的过滤器工厂对象  负责权限的校验，处理请求的bean-->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+
+        <!--
+
+            属性一:securityManager 安全管理器
+            属性二：登录页面的url
+            属性三：错误页面的url
+            属性四：定义过滤器链的拦截规则,在value中分别定义拦截规则
+        -->
+        <property name="securityManager" ref="securityManager"></property>
+        <property name="loginUrl" value="/login.jsp"></property>
+        <property name="unauthorizedUrl" value="/error.jsp"></property>
+        <property name="filterChainDefinitions">
+            <value>
+                /login.do=anon
+                /getCode.do=anon
+
+            </value>
+        </property>
+    </bean>
+
+<!-- ============= 初始化web环境下的安全管理器 的相关配置================================================ -->
+
+    <!--shiro的过滤器工厂对象的属性一，并初始化web环境下的安全管理器-->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <!--
+
+        初始化安全管理器:
+            属性一：自定义的数据源类，将自定义的数据源类注入过滤器中，
+            属性二：记住我管理器，用于页面上的记住用户名及密码的管理
+        -->
+        <property name="realms">
+            <list>
+                <ref bean="myRealm"></ref>
+            </list>
+        </property>
+        <property name="rememberMeManager" ref="rememberMeManager"></property>
+    </bean>
+
+<!--===============myRealm 自定义的数据源类 的配置=============================================-->
+
+    <!--声明自定义的数据源类，引用复杂的凭证器对象-->
+    <bean id="myRealm" class="com.baizhi.cmfz.util.MyRealm">
+        <property name="credentialsMatcher" ref="credentialsMatcher"></property>
+    </bean>
+
+    <!--声明复杂的凭证匹配器对象，放至到自定义数据源类的声明处-->
+    <bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+        <property name="hashAlgorithmName" value="md5"></property>
+        <property name="hashIterations" value="1024"></property>
+    </bean>
+
+<!-- ================== rememberMeManager 的bean 配置================================  -->
+    <!--声明记住我的管理器bean-->
+    <bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+        <property name="cookie" ref="simpleCookie"></property>
+    </bean>
+
+    <bean id="simpleCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+
+        <property name="name" value="rm"></property>
+        <property name="maxAge" value="604800"></property>
+        <property name="path" value="/"></property>
+
+    </bean>
+
 </beans>

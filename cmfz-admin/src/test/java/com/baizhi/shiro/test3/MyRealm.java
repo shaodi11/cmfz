@@ -1,3 +1,4 @@
+/*
 package com.baizhi.shiro.test3;
 
 import org.apache.shiro.authc.*;
@@ -6,6 +7,7 @@ import org.apache.shiro.util.ByteSource;
 
 import java.util.UUID;
 
+*/
 /**
  *
  * 自定义数据源类
@@ -13,7 +15,8 @@ import java.util.UUID;
  * 要验证的数据并配写死在配置文件中，而是从数据库中查得
  *
  * Created by 邵迪 on 2018/7/10.
- */
+ *//*
+
 
 
 
@@ -46,3 +49,4 @@ public class MyRealm extends AuthenticatingRealm{
         return null;
     }
 }
+*/
