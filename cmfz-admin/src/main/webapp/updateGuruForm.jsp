@@ -1,7 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <script type="text/javascript">
 	$(function() {
-		$("#updateff").form();
+		$("#updateguruff").form();
 	});
 
 </script>

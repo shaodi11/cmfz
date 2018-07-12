@@ -102,6 +102,7 @@ public class ManagerController {
             try {
                 UsernamePasswordToken token = new UsernamePasswordToken(manager.getManagerName(), manager.getManagerPassword(), rememberMe);
                 subject.login(token);
+                System.out.println(subject.hasRole("admin"));
                 System.out.println("------认证成功-----");
                 return "redirect:/main.jsp";
             } catch (AuthenticationException e) {

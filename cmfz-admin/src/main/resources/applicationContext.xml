@@ -96,6 +96,7 @@
         初始化安全管理器:
             属性一：自定义的数据源类，将自定义的数据源类注入过滤器中，
             属性二：记住我管理器，用于页面上的记住用户名及密码的管理
+            属性三：缓存管理器，用于权限授权时，只进行一次，不重复授权
         -->
         <property name="realms">
             <list>
@@ -103,6 +104,7 @@
             </list>
         </property>
         <property name="rememberMeManager" ref="rememberMeManager"></property>
+      <!--  <property name="cacheManager" ref="ehCacheManager"></property>-->
     </bean>
 
 <!--===============myRealm 自定义的数据源类 的配置=============================================-->
@@ -131,5 +133,12 @@
         <property name="path" value="/"></property>
 
     </bean>
+
+
+<!-- ================== 缓存管理器 的bean 配置 一般适用于本地缓存================================  -->
+<!--    <bean id="ehCacheManager" class="EhCacheManager">
+        <property name="cacheManagerConfigFile" value="classpath:ehcache.xml"></property>
+    </bean>-->
+
 
 </beans>
